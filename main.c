@@ -16,14 +16,14 @@ void setMatrixValues(int *firstMatrixSize, int **firstMatrix) {
     int *pI = &i;
     int *pJ = &j;
 
-    // printf("First matrix size: %d\n", firstMatrixSize);
+    printf("First matrix size: %d\n", *firstMatrixSize);
 
     printf("Input elements of matrix 1: ");
     fgets(temp2, sizeof(temp2), stdin);
     char *token = strtok(temp2, " ");
 
-    for(*pI = 0; *pI < firstMatrixSize; ++*pI) {
-        for(*pJ = 0; *pJ < firstMatrixSize; ++*pJ) {
+    for(*pI = 0; *pI < *firstMatrixSize; ++*pI) {
+        for(*pJ = 0; *pJ < *firstMatrixSize; ++*pJ) {
             printf("I: %d, J: %d\n", *pI, *pJ);
             printf("Token: %d\n", atoi(token));
             firstMatrix[*pI][*pJ] = atoi(token);
@@ -66,6 +66,6 @@ int main(int argc, char *argv[]) {
     int matrix_2[*pSize_matrix_2][*pSize_matrix_2];
 
     printf("Size of matrix 1: %d\n", *pSize_matrix_1);
-    setMatrixValues(*pSize_matrix_1, matrix_1);
+    setMatrixValues(pSize_matrix_1, matrix_1);
 
 }
