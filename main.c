@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define MAX_SIZE 4
 
 void clearBuffer (void);
@@ -13,9 +14,6 @@ int main(int argc, char *argv[]) {
     int column;
     int *pRow = &row;
     int *pColumn = &column;
-
-    char stringMatrix1[200];
-    char stringMatrix2[200];
 
     setMatrixSize(pRow, pColumn);
 
@@ -48,15 +46,18 @@ void setMatrixValues(int *row, int *column, int firstMatrix[*row][*column], int 
     printf("Input elements of matrix 2: ");
     fgets(temp3, sizeof(temp3), stdin);
 
-    char *token = strtok(temp2, " ");
-
     if(*row < 2 || *column < 2) {
         printf("invalid\n");
         exit(0);
     }
 
+    char *token = strtok(temp2, " ");
     for(*pI = 0; *pI < *row; ++*pI) {
         for(*pJ = 0; *pJ < *column; ++*pJ) {
+            if(isalpha(*token)) {
+                printf("invalid\n");
+                exit(0);
+            }
             firstMatrix[*pI][*pJ] = atoi(token);
             token = strtok(NULL, " ");
         }
@@ -70,6 +71,10 @@ void setMatrixValues(int *row, int *column, int firstMatrix[*row][*column], int 
     token = strtok(temp3, " ");
     for(*pI = 0; *pI < *row; ++*pI) {
         for(*pJ = 0; *pJ < *column; ++*pJ) {
+            if(isalpha(*token)) {
+                printf("invalid\n");
+                exit(0);
+            }
             secondMatrix[*pI][*pJ] = atoi(token);
             token = strtok(NULL, " ");
         }
