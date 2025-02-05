@@ -3,13 +3,40 @@
 #include <string.h>
 #define MAX_SIZE 4
 
+void clearBuffer (void);
+void setMatrix2Values(int *row, int *column, int secondMatrix[*row][*column]);
+void setMatrix1Values(int *row, int *column, int firstMatrix[*row][*column]);
+void setMatrixSize(int *firstMatrixSize, int *secondMatrixSize);
+void addMatrixes(int *row, int *column, int firstMatrix[*row][*column], int secondMatrix[*row][*column]);
+
+int main(int argc, char *argv[]) {
+    int row;
+    int column;
+    int *pRow = &row;
+    int *pColumn = &column;
+
+    char stringMatrix1[200];
+    char stringMatrix2[200];
+
+    setMatrixSize(pRow, pColumn);
+
+    int matrix_1[*pRow][*pColumn];
+    int matrix_2[*pRow][*pColumn];
+
+    setMatrix1Values(pRow, pColumn, matrix_1);
+    setMatrix2Values(pRow, pColumn, matrix_2);
+
+    addMatrixes(pRow, pColumn, matrix_1, matrix_2);
+
+}
+
 // This method clears buffer
 void clearBuffer (void) {
     char input;
     while ( (input = getchar()) != '\n' && input != EOF );
 }
 
-void setMatrix2Values(int *secondMatrixSize, int (*secondMatrix)[*secondMatrixSize]) {
+void setMatrix2Values(int *row, int *column, int secondMatrix[*row][*column]) {
     char temp3[200];
     int i;
     int j;
@@ -20,8 +47,8 @@ void setMatrix2Values(int *secondMatrixSize, int (*secondMatrix)[*secondMatrixSi
     fgets(temp3, sizeof(temp3), stdin);
     char *token = strtok(temp3, " ");
 
-    for(*pI = 0; *pI < *secondMatrixSize; ++*pI) {
-        for(*pJ = 0; *pJ < *secondMatrixSize; ++*pJ) {
+    for(*pI = 0; *pI < *row; ++*pI) {
+        for(*pJ = 0; *pJ < *column; ++*pJ) {
             secondMatrix[*pI][*pJ] = atoi(token);
             token = strtok(NULL, " ");
         }
@@ -29,7 +56,7 @@ void setMatrix2Values(int *secondMatrixSize, int (*secondMatrix)[*secondMatrixSi
 
 }
 
-void setMatrix1Values(int *firstMatrixSize, int (*firstMatrix)[*firstMatrixSize]) {
+void setMatrix1Values(int *row, int *column, int firstMatrix[*row][*column]) {
     char temp2[200];
     int i;
     int j;
@@ -40,8 +67,8 @@ void setMatrix1Values(int *firstMatrixSize, int (*firstMatrix)[*firstMatrixSize]
     fgets(temp2, sizeof(temp2), stdin);
     char *token = strtok(temp2, " ");
 
-    for(*pI = 0; *pI < *firstMatrixSize; ++*pI) {
-        for(*pJ = 0; *pJ < *firstMatrixSize; ++*pJ) {
+    for(*pI = 0; *pI < *row; ++*pI) {
+        for(*pJ = 0; *pJ < *column; ++*pJ) {
             firstMatrix[*pI][*pJ] = atoi(token);
             token = strtok(NULL, " ");
         }
@@ -49,7 +76,7 @@ void setMatrix1Values(int *firstMatrixSize, int (*firstMatrix)[*firstMatrixSize]
 
 }
 
-void setMatrixSize(int *firstMatrixSize, int *secondMatrixSize) {
+void setMatrixSize(int *row, int *column) {
     char temp[200];
     printf("Input the size: ");
     fgets(temp, sizeof(temp), stdin);
@@ -58,30 +85,34 @@ void setMatrixSize(int *firstMatrixSize, int *secondMatrixSize) {
 
     for(int i = 0; i < 2; i++) {
         if(i == 0) {
-            *firstMatrixSize = atoi(token);
+            *row = atoi(token);
         } else {
-            *secondMatrixSize = atoi(token);
+            *column = atoi(token);
         }
         token = strtok(NULL, " ");
     }
 }
 
-int main(int argc, char *argv[]) {
-    int size_matrix_1;
-    int size_matrix_2;
-    int *pSize_matrix_1 = &size_matrix_1;
-    int *pSize_matrix_2 = &size_matrix_2;
+void addMatrixes(int *row, int *column, int firstMatrix[*row][*column], int secondMatrix[*row][*column]) {
+    int result[*row][*column];
 
-    char stringMatrix1[200];
-    char stringMatrix2[200];
+    int i;
+    int j;
+    int *pI = &i;
+    int *pJ = &j;
 
-    setMatrixSize(pSize_matrix_1, pSize_matrix_2);
+    for(*pI = 0; *pI < *row; ++*pI) {
+        for(*pJ = 0; *pJ < *column; ++*pJ) {
+            result[*pI][*pJ] = firstMatrix[*pI][*pJ] + secondMatrix[*pI][*pJ];
+        }
+    }
 
-    int matrix_1[*pSize_matrix_1][*pSize_matrix_1];
-    int matrix_2[*pSize_matrix_2][*pSize_matrix_2];
-
-    printf("Size of matrix 1: %d\n", *pSize_matrix_1);
-    setMatrix1Values(pSize_matrix_1, matrix_1);
-    setMatrix2Values(pSize_matrix_2, matrix_2);
+    printf("The sum is: \n");
+    for(*pI = 0; *pI < *row; ++*pI) {
+        for(*pJ = 0; *pJ < *column; ++*pJ) {
+            printf("%d ", result[*pI][*pJ]);
+        }
+        printf("\n");
+    }
 
 }
