@@ -9,14 +9,32 @@ void clearBuffer (void) {
     while ( (input = getchar()) != '\n' && input != EOF );
 }
 
-void setMatrixValues(int *firstMatrixSize, int **firstMatrix) {
-    char temp2[200];
+void setMatrix2Values(int *secondMatrixSize, int (*secondMatrix)[*secondMatrixSize]) {
+    char temp3[200];
     int i;
     int j;
     int *pI = &i;
     int *pJ = &j;
 
-    printf("First matrix size: %d\n", *firstMatrixSize);
+    printf("Input elements of matrix 2: ");
+    fgets(temp3, sizeof(temp3), stdin);
+    char *token = strtok(temp3, " ");
+
+    for(*pI = 0; *pI < *secondMatrixSize; ++*pI) {
+        for(*pJ = 0; *pJ < *secondMatrixSize; ++*pJ) {
+            secondMatrix[*pI][*pJ] = atoi(token);
+            token = strtok(NULL, " ");
+        }
+    }
+
+}
+
+void setMatrix1Values(int *firstMatrixSize, int (*firstMatrix)[*firstMatrixSize]) {
+    char temp2[200];
+    int i;
+    int j;
+    int *pI = &i;
+    int *pJ = &j;
 
     printf("Input elements of matrix 1: ");
     fgets(temp2, sizeof(temp2), stdin);
@@ -24,10 +42,7 @@ void setMatrixValues(int *firstMatrixSize, int **firstMatrix) {
 
     for(*pI = 0; *pI < *firstMatrixSize; ++*pI) {
         for(*pJ = 0; *pJ < *firstMatrixSize; ++*pJ) {
-            printf("I: %d, J: %d\n", *pI, *pJ);
-            printf("Token: %d\n", atoi(token));
             firstMatrix[*pI][*pJ] = atoi(token);
-            printf("Value: %d\n", firstMatrix[*pI][*pJ]);
             token = strtok(NULL, " ");
         }
     }
@@ -66,6 +81,7 @@ int main(int argc, char *argv[]) {
     int matrix_2[*pSize_matrix_2][*pSize_matrix_2];
 
     printf("Size of matrix 1: %d\n", *pSize_matrix_1);
-    setMatrixValues(pSize_matrix_1, matrix_1);
+    setMatrix1Values(pSize_matrix_1, matrix_1);
+    setMatrix2Values(pSize_matrix_2, matrix_2);
 
 }
