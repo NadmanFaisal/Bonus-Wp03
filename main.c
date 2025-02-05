@@ -54,6 +54,10 @@ void setMatrixValues(int *row, int *column, int firstMatrix[*row][*column], int 
     char *token = strtok(temp2, " ");
     for(*pI = 0; *pI < *row; ++*pI) {
         for(*pJ = 0; *pJ < *column; ++*pJ) {
+            if(token == NULL) {
+                printf("invalid\n");
+                exit(0);
+            }
             if(isalpha(*token)) {
                 printf("invalid\n");
                 exit(0);
@@ -71,6 +75,10 @@ void setMatrixValues(int *row, int *column, int firstMatrix[*row][*column], int 
     token = strtok(temp3, " ");
     for(*pI = 0; *pI < *row; ++*pI) {
         for(*pJ = 0; *pJ < *column; ++*pJ) {
+            if(token == NULL) {
+                printf("invalid\n");
+                exit(0);
+            }
             if(isalpha(*token)) {
                 printf("invalid\n");
                 exit(0);
